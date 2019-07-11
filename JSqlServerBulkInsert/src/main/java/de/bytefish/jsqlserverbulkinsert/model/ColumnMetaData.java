@@ -14,6 +14,10 @@ public class ColumnMetaData {
     public ColumnMetaData(String name, int type) {
         this(name, type, 0, 0, false);
     }
+    
+    public ColumnMetaData(String name, int type, int precision) {
+        this(name, type, precision, 0, false);
+    }
 
     public ColumnMetaData(String name, int type, int precision, int scale, boolean isAutoIncrement) {
         this.name = name;

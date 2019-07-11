@@ -183,6 +183,10 @@ public abstract class AbstractMapping<TEntity> {
     protected void mapString(String columnName, Func2<TEntity, String> propertyGetter) {
         addColumn(columnName, Types.NVARCHAR, propertyGetter);
     }
+    
+	protected void mapVarchar(String columnName, int precision, Func2<TEntity, String> propertyGetter) {
+		addColumn(columnName, Types.VARCHAR, precision, propertyGetter);
+	}
 
     protected void mapVarBinary(String columnName, int maxLength, Func2<TEntity, byte[]> propertyGetter) {
         addColumn(columnName, Types.VARBINARY, maxLength, 0, false, propertyGetter);
@@ -210,6 +214,16 @@ public abstract class AbstractMapping<TEntity> {
     {
         // Create the current Column Meta Data:
         ColumnMetaData columnMetaData = new ColumnMetaData(name, type, precision, scale, isAutoIncrement);
+
+        // Add a new Column with the Meta Data and Property Getter:
+
+        addColumn(columnMetaData, propertyGetter);
+    }
+    
+    private <TProperty> void addColumn(String name, int type, int precision, Func2<TEntity, TProperty> propertyGetter)
+    {
+        // Create the current Column Meta Data:
+        ColumnMetaData columnMetaData = new ColumnMetaData(name, type, precision);
 
         // Add a new Column with the Meta Data and Property Getter:
 
